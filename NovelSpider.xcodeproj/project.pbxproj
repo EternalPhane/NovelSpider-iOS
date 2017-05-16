@@ -7,13 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9AEE5FE7675BF3D1AA5B78B9 /* Pods_NovelSpider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14CF52EBE13925D4D395D32E /* Pods_NovelSpider.framework */; };
+		9FC423633B0277963762EB05 /* Pods_NovelSpiderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F22B421AAF6DC571336A9060 /* Pods_NovelSpiderTests.framework */; };
 		A54296A41EA8CEFC00E86312 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296A31EA8CEFC00E86312 /* AppDelegate.swift */; };
-		A54296A61EA8CEFC00E86312 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296A51EA8CEFC00E86312 /* ViewController.swift */; };
 		A54296A91EA8CEFC00E86312 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A54296A71EA8CEFC00E86312 /* Main.storyboard */; };
 		A54296AC1EA8CEFC00E86312 /* NovelSpider.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A54296AA1EA8CEFC00E86312 /* NovelSpider.xcdatamodeld */; };
 		A54296AE1EA8CEFC00E86312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A54296AD1EA8CEFC00E86312 /* Assets.xcassets */; };
 		A54296B11EA8CEFC00E86312 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A54296AF1EA8CEFC00E86312 /* LaunchScreen.storyboard */; };
 		A54296BC1EA8CEFC00E86312 /* NovelSpiderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296BB1EA8CEFC00E86312 /* NovelSpiderTests.swift */; };
+		A54296CB1EA8D25A00E86312 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296CA1EA8D25A00E86312 /* Chapter.swift */; };
+		A54296CE1EA8D2A300E86312 /* SimpleSpider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296CD1EA8D2A300E86312 /* SimpleSpider.swift */; };
+		A54296D01EA8D2D200E86312 /* Novel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296CF1EA8D2D200E86312 /* Novel.swift */; };
+		A54296D21EA8D2EB00E86312 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296D11EA8D2EB00E86312 /* Source.swift */; };
+		A54296D41EA8D36000E86312 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296D31EA8D36000E86312 /* Extensions.swift */; };
+		A55A61A61EA8D42800A17714 /* AddNovelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A619E1EA8D42800A17714 /* AddNovelTableViewController.swift */; };
+		A55A61A71EA8D42800A17714 /* ModifySourcePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A619F1EA8D42800A17714 /* ModifySourcePopupViewController.swift */; };
+		A55A61A81EA8D42800A17714 /* ModifySourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A01EA8D42800A17714 /* ModifySourceViewController.swift */; };
+		A55A61A91EA8D42800A17714 /* NovelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A11EA8D42800A17714 /* NovelTableViewCell.swift */; };
+		A55A61AA1EA8D42800A17714 /* NovelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A21EA8D42800A17714 /* NovelTableViewController.swift */; };
+		A55A61AB1EA8D42800A17714 /* SearchEngineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A31EA8D42800A17714 /* SearchEngineTableViewController.swift */; };
+		A55A61AC1EA8D42800A17714 /* SourceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A41EA8D42800A17714 /* SourceTableViewCell.swift */; };
+		A55A61AD1EA8D42800A17714 /* SourceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A51EA8D42800A17714 /* SourceTableViewController.swift */; };
+		A5C3E5EB1EC8A58100C59170 /* ActivityIndicator.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5C3E5EA1EC8A58100C59170 /* ActivityIndicator.storyboard */; };
+		A5C3E5ED1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C3E5EC1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift */; };
+		A5C3E5EF1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C3E5EE1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift */; };
+		A5C5C9AE1EABAED1009CAABD /* ContentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C5C9AD1EABAED1009CAABD /* ContentsTableViewCell.swift */; };
+		A5DC8FAD1EAB83670034FBD8 /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DC8FAC1EAB83670034FBD8 /* ReaderViewController.swift */; };
+		A5DC8FB11EAB83FB0034FBD8 /* ContentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DC8FB01EAB83FB0034FBD8 /* ContentsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,9 +47,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14CF52EBE13925D4D395D32E /* Pods_NovelSpider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NovelSpider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1644A938BC5CF8C6EA2477B8 /* Pods-NovelSpiderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NovelSpiderTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NovelSpiderTests/Pods-NovelSpiderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A54296A01EA8CEFC00E86312 /* NovelSpider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NovelSpider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A54296A31EA8CEFC00E86312 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A54296A51EA8CEFC00E86312 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A54296A81EA8CEFC00E86312 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A54296AB1EA8CEFC00E86312 /* NovelSpider.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NovelSpider.xcdatamodel; sourceTree = "<group>"; };
 		A54296AD1EA8CEFC00E86312 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -38,6 +59,29 @@
 		A54296B71EA8CEFC00E86312 /* NovelSpiderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovelSpiderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A54296BB1EA8CEFC00E86312 /* NovelSpiderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovelSpiderTests.swift; sourceTree = "<group>"; };
 		A54296BD1EA8CEFC00E86312 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A54296CA1EA8D25A00E86312 /* Chapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
+		A54296CD1EA8D2A300E86312 /* SimpleSpider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleSpider.swift; sourceTree = "<group>"; };
+		A54296CF1EA8D2D200E86312 /* Novel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Novel.swift; sourceTree = "<group>"; };
+		A54296D11EA8D2EB00E86312 /* Source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
+		A54296D31EA8D36000E86312 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		A55A619E1EA8D42800A17714 /* AddNovelTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNovelTableViewController.swift; sourceTree = "<group>"; };
+		A55A619F1EA8D42800A17714 /* ModifySourcePopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifySourcePopupViewController.swift; sourceTree = "<group>"; };
+		A55A61A01EA8D42800A17714 /* ModifySourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifySourceViewController.swift; sourceTree = "<group>"; };
+		A55A61A11EA8D42800A17714 /* NovelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovelTableViewCell.swift; sourceTree = "<group>"; };
+		A55A61A21EA8D42800A17714 /* NovelTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovelTableViewController.swift; sourceTree = "<group>"; };
+		A55A61A31EA8D42800A17714 /* SearchEngineTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEngineTableViewController.swift; sourceTree = "<group>"; };
+		A55A61A41EA8D42800A17714 /* SourceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceTableViewCell.swift; sourceTree = "<group>"; };
+		A55A61A51EA8D42800A17714 /* SourceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceTableViewController.swift; sourceTree = "<group>"; };
+		A5C3E5EA1EC8A58100C59170 /* ActivityIndicator.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ActivityIndicator.storyboard; sourceTree = "<group>"; };
+		A5C3E5EC1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabeledActivityIndicatorViewController.swift; sourceTree = "<group>"; };
+		A5C3E5EE1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorViewController.swift; sourceTree = "<group>"; };
+		A5C5C9AD1EABAED1009CAABD /* ContentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentsTableViewCell.swift; sourceTree = "<group>"; };
+		A5DC8FAC1EAB83670034FBD8 /* ReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
+		A5DC8FB01EAB83FB0034FBD8 /* ContentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentsTableViewController.swift; sourceTree = "<group>"; };
+		B062561FECE0D0D0C8CB278A /* Pods-NovelSpider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NovelSpider.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NovelSpider/Pods-NovelSpider.debug.xcconfig"; sourceTree = "<group>"; };
+		C30436C4A03D1AB7A240D3A5 /* Pods-NovelSpider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NovelSpider.release.xcconfig"; path = "Pods/Target Support Files/Pods-NovelSpider/Pods-NovelSpider.release.xcconfig"; sourceTree = "<group>"; };
+		D9544054FF43509F058A774B /* Pods-NovelSpiderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NovelSpiderTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NovelSpiderTests/Pods-NovelSpiderTests.release.xcconfig"; sourceTree = "<group>"; };
+		F22B421AAF6DC571336A9060 /* Pods_NovelSpiderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NovelSpiderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AEE5FE7675BF3D1AA5B78B9 /* Pods_NovelSpider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FC423633B0277963762EB05 /* Pods_NovelSpiderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +110,8 @@
 				A54296A21EA8CEFC00E86312 /* NovelSpider */,
 				A54296BA1EA8CEFC00E86312 /* NovelSpiderTests */,
 				A54296A11EA8CEFC00E86312 /* Products */,
+				C4413ECDD642DA020A2B79A6 /* Pods */,
+				F55A4BED27060C2AE4AEB7A3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,13 +127,11 @@
 		A54296A21EA8CEFC00E86312 /* NovelSpider */ = {
 			isa = PBXGroup;
 			children = (
-				A54296A31EA8CEFC00E86312 /* AppDelegate.swift */,
-				A54296A51EA8CEFC00E86312 /* ViewController.swift */,
-				A54296A71EA8CEFC00E86312 /* Main.storyboard */,
-				A54296AD1EA8CEFC00E86312 /* Assets.xcassets */,
-				A54296AF1EA8CEFC00E86312 /* LaunchScreen.storyboard */,
-				A54296B21EA8CEFC00E86312 /* Info.plist */,
-				A54296AA1EA8CEFC00E86312 /* NovelSpider.xcdatamodeld */,
+				A54296C61EA8CFC300E86312 /* Application */,
+				A54296C91EA8D00000E86312 /* Model */,
+				A54296C71EA8CFE200E86312 /* Controller */,
+				A54296C81EA8CFEC00E86312 /* View */,
+				A54296CC1EA8D28A00E86312 /* Util */,
 			);
 			path = NovelSpider;
 			sourceTree = "<group>";
@@ -99,6 +145,86 @@
 			path = NovelSpiderTests;
 			sourceTree = "<group>";
 		};
+		A54296C61EA8CFC300E86312 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				A54296A31EA8CEFC00E86312 /* AppDelegate.swift */,
+				A54296D31EA8D36000E86312 /* Extensions.swift */,
+				A54296AD1EA8CEFC00E86312 /* Assets.xcassets */,
+				A54296B21EA8CEFC00E86312 /* Info.plist */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		A54296C71EA8CFE200E86312 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A55A61A21EA8D42800A17714 /* NovelTableViewController.swift */,
+				A55A61A11EA8D42800A17714 /* NovelTableViewCell.swift */,
+				A55A619E1EA8D42800A17714 /* AddNovelTableViewController.swift */,
+				A55A61A51EA8D42800A17714 /* SourceTableViewController.swift */,
+				A55A61A41EA8D42800A17714 /* SourceTableViewCell.swift */,
+				A55A61A31EA8D42800A17714 /* SearchEngineTableViewController.swift */,
+				A55A61A01EA8D42800A17714 /* ModifySourceViewController.swift */,
+				A55A619F1EA8D42800A17714 /* ModifySourcePopupViewController.swift */,
+				A5DC8FAC1EAB83670034FBD8 /* ReaderViewController.swift */,
+				A5DC8FB01EAB83FB0034FBD8 /* ContentsTableViewController.swift */,
+				A5C5C9AD1EABAED1009CAABD /* ContentsTableViewCell.swift */,
+				A5C3E5EC1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift */,
+				A5C3E5EE1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		A54296C81EA8CFEC00E86312 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A54296A71EA8CEFC00E86312 /* Main.storyboard */,
+				A5C3E5EA1EC8A58100C59170 /* ActivityIndicator.storyboard */,
+				A54296AF1EA8CEFC00E86312 /* LaunchScreen.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		A54296C91EA8D00000E86312 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A54296CA1EA8D25A00E86312 /* Chapter.swift */,
+				A54296CF1EA8D2D200E86312 /* Novel.swift */,
+				A54296D11EA8D2EB00E86312 /* Source.swift */,
+				A54296AA1EA8CEFC00E86312 /* NovelSpider.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		A54296CC1EA8D28A00E86312 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				A54296CD1EA8D2A300E86312 /* SimpleSpider.swift */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		C4413ECDD642DA020A2B79A6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B062561FECE0D0D0C8CB278A /* Pods-NovelSpider.debug.xcconfig */,
+				C30436C4A03D1AB7A240D3A5 /* Pods-NovelSpider.release.xcconfig */,
+				1644A938BC5CF8C6EA2477B8 /* Pods-NovelSpiderTests.debug.xcconfig */,
+				D9544054FF43509F058A774B /* Pods-NovelSpiderTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F55A4BED27060C2AE4AEB7A3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				14CF52EBE13925D4D395D32E /* Pods_NovelSpider.framework */,
+				F22B421AAF6DC571336A9060 /* Pods_NovelSpiderTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -106,9 +232,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A54296C01EA8CEFC00E86312 /* Build configuration list for PBXNativeTarget "NovelSpider" */;
 			buildPhases = (
+				2D744607DFBDFC397392EF0A /* [CP] Check Pods Manifest.lock */,
 				A542969C1EA8CEFC00E86312 /* Sources */,
 				A542969D1EA8CEFC00E86312 /* Frameworks */,
 				A542969E1EA8CEFC00E86312 /* Resources */,
+				82FA958E0126E76CADB94A1C /* [CP] Embed Pods Frameworks */,
+				E9608DC03135417111210359 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -123,9 +252,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A54296C31EA8CEFC00E86312 /* Build configuration list for PBXNativeTarget "NovelSpiderTests" */;
 			buildPhases = (
+				C2977994A9EA9E3562F5AF00 /* [CP] Check Pods Manifest.lock */,
 				A54296B31EA8CEFC00E86312 /* Sources */,
 				A54296B41EA8CEFC00E86312 /* Frameworks */,
 				A54296B51EA8CEFC00E86312 /* Resources */,
+				8A5FC9E419B685DC2C25DF91 /* [CP] Embed Pods Frameworks */,
+				BD2B329A975E41D3A9A11110 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -185,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A54296B11EA8CEFC00E86312 /* LaunchScreen.storyboard in Resources */,
+				A5C3E5EB1EC8A58100C59170 /* ActivityIndicator.storyboard in Resources */,
 				A54296AE1EA8CEFC00E86312 /* Assets.xcassets in Resources */,
 				A54296A91EA8CEFC00E86312 /* Main.storyboard in Resources */,
 			);
@@ -199,14 +332,124 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2D744607DFBDFC397392EF0A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		82FA958E0126E76CADB94A1C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NovelSpider/Pods-NovelSpider-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8A5FC9E419B685DC2C25DF91 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NovelSpiderTests/Pods-NovelSpiderTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BD2B329A975E41D3A9A11110 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NovelSpiderTests/Pods-NovelSpiderTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C2977994A9EA9E3562F5AF00 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E9608DC03135417111210359 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NovelSpider/Pods-NovelSpider-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A542969C1EA8CEFC00E86312 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A54296A61EA8CEFC00E86312 /* ViewController.swift in Sources */,
+				A54296D01EA8D2D200E86312 /* Novel.swift in Sources */,
+				A55A61AD1EA8D42800A17714 /* SourceTableViewController.swift in Sources */,
+				A5C3E5ED1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift in Sources */,
+				A55A61A91EA8D42800A17714 /* NovelTableViewCell.swift in Sources */,
+				A5C5C9AE1EABAED1009CAABD /* ContentsTableViewCell.swift in Sources */,
 				A54296A41EA8CEFC00E86312 /* AppDelegate.swift in Sources */,
+				A54296D41EA8D36000E86312 /* Extensions.swift in Sources */,
+				A5DC8FB11EAB83FB0034FBD8 /* ContentsTableViewController.swift in Sources */,
+				A54296D21EA8D2EB00E86312 /* Source.swift in Sources */,
+				A55A61A81EA8D42800A17714 /* ModifySourceViewController.swift in Sources */,
 				A54296AC1EA8CEFC00E86312 /* NovelSpider.xcdatamodeld in Sources */,
+				A55A61AC1EA8D42800A17714 /* SourceTableViewCell.swift in Sources */,
+				A55A61A71EA8D42800A17714 /* ModifySourcePopupViewController.swift in Sources */,
+				A5C3E5EF1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift in Sources */,
+				A55A61A61EA8D42800A17714 /* AddNovelTableViewController.swift in Sources */,
+				A5DC8FAD1EAB83670034FBD8 /* ReaderViewController.swift in Sources */,
+				A54296CB1EA8D25A00E86312 /* Chapter.swift in Sources */,
+				A55A61AB1EA8D42800A17714 /* SearchEngineTableViewController.swift in Sources */,
+				A54296CE1EA8D2A300E86312 /* SimpleSpider.swift in Sources */,
+				A55A61AA1EA8D42800A17714 /* NovelTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +516,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = BS4432C7Q8;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -289,7 +533,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -324,6 +568,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = BS4432C7Q8;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -334,7 +579,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -345,6 +590,7 @@
 		};
 		A54296C11EA8CEFC00E86312 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B062561FECE0D0D0C8CB278A /* Pods-NovelSpider.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = BS4432C7Q8;
@@ -353,11 +599,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = eternalphane.NovelSpider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		A54296C21EA8CEFC00E86312 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C30436C4A03D1AB7A240D3A5 /* Pods-NovelSpider.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = BS4432C7Q8;
@@ -366,11 +614,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = eternalphane.NovelSpider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 		A54296C41EA8CEFC00E86312 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1644A938BC5CF8C6EA2477B8 /* Pods-NovelSpiderTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -386,6 +636,7 @@
 		};
 		A54296C51EA8CEFC00E86312 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D9544054FF43509F058A774B /* Pods-NovelSpiderTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -418,6 +669,7 @@
 				A54296C21EA8CEFC00E86312 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A54296C31EA8CEFC00E86312 /* Build configuration list for PBXNativeTarget "NovelSpiderTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +678,7 @@
 				A54296C51EA8CEFC00E86312 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
