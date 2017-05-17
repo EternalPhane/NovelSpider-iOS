@@ -296,6 +296,7 @@
                         <outlet property="contentsButton" destination="xmb-pM-Ry3" id="t4g-8f-oSa"/>
                         <outlet property="contentsView" destination="dDA-4M-dq3" id="McF-lg-RhO"/>
                         <outlet property="contentsViewWidthConstraint" destination="jbP-bv-sfx" id="2yO-G5-lPL"/>
+                        <outlet property="fontSizeSlider" destination="fdJ-Cp-gKZ" id="M6i-fH-elR"/>
                         <outlet property="readerTextView" destination="Fbp-R6-d4n" id="9Ts-NC-mLw"/>
                         <outlet property="settingsButton" destination="cOd-Iw-INN" id="7FZ-zY-tAK"/>
                         <outlet property="settingsView" destination="she-ae-g95" id="rMW-Lh-mCo"/>

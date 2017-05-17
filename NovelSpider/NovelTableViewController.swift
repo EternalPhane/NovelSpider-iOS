@@ -62,27 +62,27 @@ class NovelTableViewController: UITableViewController {
         } else {
             cell.accessoryView = nil
         }
+        cell.cacheProgressView.isHidden = !novel.isCaching
         return cell
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        return !self.novels[indexPath.row].isCaching && (self.refreshControl == nil || !self.refreshControl!.isRefreshing)
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let cell = tableView.cellForRow(at: indexPath) as! NovelTableViewCell
         let handler = { (action: UITableViewRowAction, indexPath: IndexPath) in
             self.setEditing(false, animated: true)
-            guard cell.cacheProgressView.isHidden != false else {
-                return
+            self.novels[indexPath.row].isCaching = true
+            if let cell = tableView.cellForRow(at: indexPath) as? NovelTableViewCell {
+                cell.cacheProgressView.isHidden = false
             }
-            cell.cacheProgressView.isHidden = false
             DispatchQueue.global().async {
                 let refreshControl = self.refreshControl
                 self.refreshControl = nil
                 let result = self.novels[indexPath.row].cache(update: action.title == "更新缓存") { (progress: Float) in
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateCacheProgress"), object: nil, userInfo: [
-                        "cell": cell,
+                        "indexPath": indexPath,
                         "progress": progress
                     ])
                 }
@@ -91,7 +91,10 @@ class NovelTableViewController: UITableViewController {
                     if !result {
                         self.alert(title: "错误", message: "章节缓存失败，请检查网络！", okAction: nil)
                     }
-                    cell.cacheProgressView.isHidden = true
+                    if let cell = tableView.cellForRow(at: indexPath) as? NovelTableViewCell {
+                        cell.cacheProgressView.isHidden = true
+                    }
+                    self.novels[indexPath.row].isCaching = false
                     self.refreshControl = refreshControl
                 }
             }
@@ -143,7 +146,7 @@ class NovelTableViewController: UITableViewController {
     func reloadData() {
         do {
             let fetchRequest: NSFetchRequest<Novel> = Novel.fetchRequest()
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Novel.order), ascending: true)]
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Novel.order), ascending: true, selector: #selector(NSString.localizedStandardCompare))]
             self.novels = try self.context.fetch(fetchRequest)
         } catch {
             let nserror = error as NSError
@@ -264,8 +267,10 @@ class NovelTableViewController: UITableViewController {
     }
     
     func updateProgress(notification: Notification) {
-        DispatchQueue.main.async {
-            (notification.userInfo!["cell"] as! NovelTableViewCell).cacheProgressView.progress = notification.userInfo!["progress"] as! Float
+        if let cell = tableView.cellForRow(at: notification.userInfo!["indexPath"] as! IndexPath) as? NovelTableViewCell {
+            DispatchQueue.main.async {
+                cell.cacheProgressView.progress = notification.userInfo!["progress"] as! Float
+            }
         }
     }
 }

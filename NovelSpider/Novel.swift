@@ -18,6 +18,7 @@ class Novel: NSManagedObject {
     @NSManaged var order: String?
     @NSManaged var updates: String?
     @NSManaged var lastViewChapter: Chapter?
+    var isCaching = false
     
     @nonobjc class func fetchRequest() -> NSFetchRequest<Novel> {
         return NSFetchRequest<Novel>(entityName: "Novel")

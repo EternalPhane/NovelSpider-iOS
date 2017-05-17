@@ -15,6 +15,7 @@ class ReaderViewController: UIViewController {
     @IBOutlet weak var settingsView: UIView!
     @IBOutlet weak var contentsButton: UIBarButtonItem!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
+    @IBOutlet weak var fontSizeSlider: UISlider!
     @IBOutlet var colorButtons: [UIButton]!
     @IBOutlet weak var contentsViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var settingsViewBottomConstraint: NSLayoutConstraint!
@@ -68,6 +69,7 @@ class ReaderViewController: UIViewController {
                 UserDefaults.standard.synchronize()
             }
             self.setReaderTextAttribute(lineSpacing: 10, fontSize: CGFloat(fontSize))
+            self.fontSizeSlider.value = fontSize
             var backgroundColor: UIColor!
             let data = UserDefaults.standard.object(forKey: "BackgroundColor") as? Data
             if data == nil {
@@ -78,10 +80,14 @@ class ReaderViewController: UIViewController {
                 backgroundColor = NSKeyedUnarchiver.unarchiveObject(with: data!) as! UIColor
             }
             self.readerTextView.backgroundColor = backgroundColor
-            let isDark = UserDefaults.standard.bool(forKey: "IsDark")
+            for button in self.colorButtons {
+                if button.backgroundColor!.isConvertedEqual(backgroundColor) {
+                    button.layer.borderWidth = 2
+                }
+            }
             var textColor: UIColor!
             var barStyle: UIBarStyle!
-            if isDark {
+            if self.readerTextView.backgroundColor!.isConvertedEqual(.black) {
                 barStyle = .black
                 textColor = .lightText
             } else {
