@@ -71,13 +71,12 @@ class ReaderViewController: UIViewController {
             self.setReaderTextAttribute(lineSpacing: 10, fontSize: CGFloat(fontSize))
             self.fontSizeSlider.value = fontSize
             var backgroundColor: UIColor!
-            let data = UserDefaults.standard.object(forKey: "BackgroundColor") as? Data
-            if data == nil {
+            if let data = UserDefaults.standard.object(forKey: "BackgroundColor") as? Data {
+                backgroundColor = NSKeyedUnarchiver.unarchiveObject(with: data) as! UIColor
+            } else {
                 backgroundColor = .groupTableViewBackground
                 UserDefaults.standard.set(NSKeyedArchiver.archivedData(withRootObject: backgroundColor), forKey: "BackgroundColor")
                 UserDefaults.standard.synchronize()
-            } else {
-                backgroundColor = NSKeyedUnarchiver.unarchiveObject(with: data!) as! UIColor
             }
             self.readerTextView.backgroundColor = backgroundColor
             for button in self.colorButtons {
@@ -111,9 +110,17 @@ class ReaderViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let data = self.novel.lastViewOffset {
+            self.readerTextView.setContentOffset(NSKeyedUnarchiver.unarchiveObject(with: data as Data) as! CGPoint, animated: false)
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.novel.lastViewChapter = (self.novel.contents![self.chapterIndex] as! Chapter)
+        self.novel.lastViewOffset = NSKeyedArchiver.archivedData(withRootObject: self.readerTextView.contentOffset) as NSData
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
         self.navigationController!.toolbar.isTranslucent = false
         self.navigationController!.isToolbarHidden = true

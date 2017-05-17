@@ -9,6 +9,7 @@
     <entity name="Novel" representedClassName=".Novel" syncable="YES">
         <attribute name="avatar" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="contentsUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastViewOffset" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="order" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updates" optional="YES" attributeType="String" syncable="YES"/>
@@ -23,7 +24,7 @@
     </entity>
     <elements>
         <element name="Chapter" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="Novel" positionX="-36" positionY="27" width="128" height="165"/>
+        <element name="Novel" positionX="-36" positionY="27" width="128" height="180"/>
         <element name="Source" positionX="-54" positionY="9" width="128" height="90"/>
     </elements>
 </model>
