@@ -34,15 +34,14 @@ class ContentsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ContentsTableViewCell", for: indexPath) as! ContentsTableViewCell
         let chapter = self.novel.contents![indexPath.row] as! Chapter
         cell.titleLabel.text = chapter.title
-        if chapter.content != nil {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
+        cell.titleLabel.textColor = chapter.isNew ? .blue : .black
+        cell.accessoryType = chapter.content != nil ? .checkmark : .none
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! ContentsTableViewCell
+        cell.titleLabel.textColor = .black
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "selectChapter"), object: nil, userInfo: ["index": indexPath.row])
     }
     

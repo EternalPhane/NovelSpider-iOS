@@ -67,6 +67,7 @@ class AddNovelTableViewController: UITableViewController {
                 let chapter = Chapter(context: self.context)
                 chapter.title = obj.title
                 chapter.url = obj.url
+                chapter.isNew = false
                 novel.addChapter(chapter: chapter)
             }
             novel.order = "0"

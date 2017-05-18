@@ -55,7 +55,7 @@ class SimpleSpider {
         var html: String?
         let sema = DispatchSemaphore(value: 0)
         URLSession.shared.dataTask(with: req) { (data, response, error) in
-            guard data != nil else {
+            guard data != nil && (response as! HTTPURLResponse).statusCode == 200 else {
                 sema.signal()
                 return
             }
@@ -144,7 +144,7 @@ class SimpleSpider {
             return nil
         }
         for link in doc!.nodes(matchingSelector: "a") {
-            let text = link.textContent
+            let text = link.textContent.trimmingCharacters(in: .whitespacesAndNewlines)
             if SimpleSpider.regexChapterTitle.numberOfMatches(in: text, range: NSRange(location: 0, length: text.characters.count)) > 0 {
                 if let url = URL(string: link["href"], relativeTo: baseUrl) {
                     if dict[text] == nil {
@@ -153,8 +153,8 @@ class SimpleSpider {
                     } else {
                         var flag = true
                         for oldUrl in dict[text]! {
-                            if oldUrl == url.absoluteString || SimpleSpider.getChapter(url: oldUrl) == SimpleSpider.getChapter(url: url.absoluteString) {
-                                flag = false
+                            if oldUrl == url.absoluteString {
+                                flag = flag && false
                             }
                         }
                         if flag {
@@ -179,7 +179,7 @@ class SimpleSpider {
         var html = raw_doc!.innerHTML
         html = SimpleSpider.regexWhite.stringByReplacingMatches(in: html, range: NSRange(location: 0, length: html.characters.count), withTemplate: "")
         let doc = HTMLDocument(string: SimpleSpider.regexContainer.stringByReplacingMatches(in: html, range: NSRange(location: 0, length: html.characters.count), withTemplate: "\n$0"))
-        for node in doc.nodes(matchingSelector: "a, script, style") {
+        for node in doc.nodes(matchingSelector: "a, cite, em, i, script, style") {
             node.removeFromParentNode()
         }
         for node in doc.nodes(matchingSelector: "br") {

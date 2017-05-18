@@ -19,7 +19,7 @@ class ReaderViewController: UIViewController {
     @IBOutlet var colorButtons: [UIButton]!
     @IBOutlet weak var contentsViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var settingsViewBottomConstraint: NSLayoutConstraint!
-    var contentViewWidth: CGFloat!
+    var contentsViewWidth: CGFloat!
     var toggleBarsGesture: UIGestureRecognizer!
     var toggleContentsGesture: UIGestureRecognizer!
     var toggleSettingsGesture: UIGestureRecognizer!
@@ -32,7 +32,7 @@ class ReaderViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.contentViewWidth = self.view.bounds.width * 2 / 3
+        self.contentsViewWidth = self.view.bounds.width * 2 / 3
         self.contentsButton.setTitleTextAttributes([NSFontAttributeName: UIFont.fontAwesome(ofSize: 20)], for: .normal)
         self.contentsButton.title = String.fontAwesomeIcon(name: .list)
         self.settingsButton.setTitleTextAttributes([NSFontAttributeName: UIFont.fontAwesome(ofSize: 20)], for: .normal)
@@ -193,17 +193,12 @@ class ReaderViewController: UIViewController {
     }
     
     func toggleContents() {
-        if self.contentsView.tag == 0 {
-            self.contentsViewWidthConstraint.constant = self.contentViewWidth
-            self.contentsView.tag = 1
-            self.toggleBarsGesture.isEnabled = false
-            self.toggleContentsGesture.isEnabled = true
+        let flag = self.contentsViewWidthConstraint.constant == 0
+        self.contentsViewWidthConstraint.constant = flag ? self.contentsViewWidth : 0
+        self.toggleBarsGesture.isEnabled = !flag
+        self.toggleContentsGesture.isEnabled = flag
+        if flag {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeChapter"), object: nil, userInfo: ["index": self.chapterIndex])
-        } else {
-            self.contentsViewWidthConstraint.constant = 0
-            self.contentsView.tag = 0
-            self.toggleContentsGesture.isEnabled = false
-            self.toggleBarsGesture.isEnabled = true
         }
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
@@ -211,19 +206,13 @@ class ReaderViewController: UIViewController {
     }
     
     func toggleSettings() {
-        if self.settingsView.tag == 0 {
-            self.settingsViewBottomConstraint.constant = 0
-            self.settingsView.tag = 1
-            self.toggleBarsGesture.isEnabled = false
-            self.toggleSettingsGesture.isEnabled = true
+        let flag = self.settingsViewBottomConstraint.constant == -self.settingsView.bounds.height
+        self.settingsViewBottomConstraint.constant = flag ? 0 : -self.settingsView.bounds.height
+        self.toggleBarsGesture.isEnabled = !flag
+        self.toggleSettingsGesture.isEnabled = flag
+        self.readerTextView.panGestureRecognizer.isEnabled = !flag
+        if flag {
             self.toggleBars()
-            self.readerTextView.panGestureRecognizer.isEnabled = false
-        } else {
-            self.settingsViewBottomConstraint.constant = -self.settingsView.bounds.height
-            self.settingsView.tag = 0
-            self.toggleSettingsGesture.isEnabled = false
-            self.toggleBarsGesture.isEnabled = true
-            self.readerTextView.panGestureRecognizer.isEnabled = true
         }
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
@@ -245,10 +234,12 @@ class ReaderViewController: UIViewController {
         if wait {
             self.showActivityIndicator(withLabel: true, labelText: "正在加载...")
         }
+        chapter.isNew = false
         DispatchQueue.global().async {
             let content = chapter.content ?? SimpleSpider.getChapter(url: chapter.url!)
             DispatchQueue.main.async {
                 guard content != nil else {
+                    self.readerTextView.text = ""
                     let error = {
                         self.alert(title: "错误", message: "章节加载失败，请检查网络！", okAction: nil)
                     }

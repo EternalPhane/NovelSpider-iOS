@@ -57,8 +57,8 @@ class NovelTableViewController: UITableViewController {
         if let lastViewChapter = novel.lastViewChapter {
             cell.statusLabel.text = lastViewChapter.title
         }
-        if let updates = novel.updates, updates != "0" {
-            cell.showAccesoryBadge(badge: updates)
+        if novel.updates > 0 {
+            cell.showAccesoryBadge(badge: "\(novel.updates)")
         } else {
             cell.accessoryView = nil
         }
@@ -139,7 +139,6 @@ class NovelTableViewController: UITableViewController {
             viewController.novels = self.novels
         } else if let viewController = segue.destination as? ReaderViewController {
             viewController.novel = self.novels[self.tableView.indexPathForSelectedRow!.row]
-            viewController.novel.updates = "0"
         }
     }
     
@@ -157,23 +156,23 @@ class NovelTableViewController: UITableViewController {
     
     func refresh() {
         self.tableView.allowsSelection = false
+        self.refreshControl!.attributedTitle = NSAttributedString(string: "正在更新: 0/\(self.novels.count)")
         DispatchQueue.global().async {
             var result = true
-            for novel in self.novels {
-                result = novel.update()
-                guard result else {
-                    break
+            for (index, novel) in self.novels.enumerated() {
+                result = result && novel.update()
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                    self.refreshControl!.attributedTitle = NSAttributedString(string: "正在更新: \(index + 1)/\(self.novels.count)")
                 }
             }
             (UIApplication.shared.delegate as! AppDelegate).saveContext()
             DispatchQueue.main.async {
                 self.refreshControl!.endRefreshing()
+                self.refreshControl!.attributedTitle = nil
                 if !result {
-                    self.alert(title: "错误", message: "检查更新失败，请检查网络！") {
-                        self.tableView.reloadData()
-                    }
+                    self.alert(title: "错误", message: "检查更新失败，请检查网络！", okAction: nil)
                 }
-                self.tableView.reloadData()
                 self.tableView.allowsSelection = true
             }
         }

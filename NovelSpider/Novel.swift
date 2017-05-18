@@ -16,10 +16,19 @@ class Novel: NSManagedObject {
     @NSManaged var contents: NSOrderedSet?
     @NSManaged var avatar: NSData?
     @NSManaged var order: String?
-    @NSManaged var updates: String?
     @NSManaged var lastViewChapter: Chapter?
     @NSManaged var lastViewOffset: NSData?
     var isCaching = false
+    
+    var updates: Int {
+        var updates = 0
+        for chapter in self.contents! {
+            if (chapter as! Chapter).isNew {
+                updates += 1
+            }
+        }
+        return updates
+    }
     
     @nonobjc class func fetchRequest() -> NSFetchRequest<Novel> {
         return NSFetchRequest<Novel>(entityName: "Novel")
@@ -54,33 +63,57 @@ class Novel: NSManagedObject {
         guard contents != nil else {
             return false
         }
-        var contents_old = [String: (url: String, index: Int)]()
+        var oldContents = [String: [String]]()
+        var oldContentsIndex = [String: Int]()
         for (index, chapter) in self.contents!.enumerated() {
             let chapter = chapter as! Chapter
-            contents_old[chapter.title!] = (chapter.url!, index)
+            if oldContents[chapter.title!] == nil {
+                oldContents[chapter.title!] = [chapter.url!]
+            } else {
+                oldContents[chapter.title!]!.append(chapter.url!)
+            }
+            oldContents[chapter.url!] = [chapter.title!]
+            oldContentsIndex[chapter.url!] = index
         }
-        var updates = 0
+        let newContents = NSMutableOrderedSet()
         for (title, url) in contents! {
-            if contents_old[title] == nil {
-                updates += 1
-                let chapter = Chapter(context: self.managedObjectContext!)
-                chapter.title = title
-                chapter.url = url
-                self.addChapter(chapter: chapter)
-            } else if contents_old[title]!.url != url {
-                updates += 1
-                let chapter = self.contents![contents_old[title]!.index] as! Chapter
-                chapter.url = url
-                if chapter.content != nil {
-                    chapter.content = SimpleSpider.getChapter(url: url)
-                    guard chapter.content != nil else {
-                        self.updates = "\(Int(self.updates ?? "0")! + updates)"
-                        return false
-                    }
+            var chapter: Chapter!
+            if oldContents[title] == nil {
+                if oldContents[url] == nil {
+                    chapter = Chapter(context: self.managedObjectContext!)
+                    chapter.title = title
+                    chapter.url = url
+                    chapter.isNew = true
+                    self.addChapter(chapter: chapter)
+                } else {
+                    chapter = self.contents![oldContentsIndex[url]!] as! Chapter
+                    chapter.title = title
+                }
+            } else {
+                if oldContents[url] == nil {
+                    chapter = Chapter(context: self.managedObjectContext!)
+                    chapter.title = title
+                    chapter.url = url
+                    chapter.isNew = true
+                } else {
+                    chapter = self.contents![oldContentsIndex[url]!] as! Chapter
                 }
             }
+            newContents.add(chapter)
         }
-        self.updates = "\(Int(self.updates ?? "0")! + updates)"
+        for chapter in newContents {
+            let chapter = chapter as! Chapter
+            if oldContents[chapter.url!] != nil {
+                oldContents[chapter.url!] = nil
+            }
+        }
+        for chapter in self.contents! {
+            let chapter = chapter as! Chapter
+            if oldContents[chapter.url!] != nil {
+                self.managedObjectContext!.delete(chapter)
+            }
+        }
+        self.contents = newContents
         return true
     }
     
