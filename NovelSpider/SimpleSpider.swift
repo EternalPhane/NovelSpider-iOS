@@ -137,7 +137,7 @@ class SimpleSpider {
     
     class func getContents(url: String) -> [(title: String, url: String)]? {
         var contents = [(title: String, url: String)]()
-        var set = Set<String>()
+        var dict = [String: [String]]()
         let baseUrl = URL(string: url)
         let doc = SimpleSpider.getHtml(url)
         guard doc != nil else {
@@ -147,9 +147,20 @@ class SimpleSpider {
             let text = link.textContent
             if SimpleSpider.regexChapterTitle.numberOfMatches(in: text, range: NSRange(location: 0, length: text.characters.count)) > 0 {
                 if let url = URL(string: link["href"], relativeTo: baseUrl) {
-                    if !set.contains(text) {
+                    if dict[text] == nil {
                         contents.append((text, url.absoluteString))
-                        set.insert(text)
+                        dict[text] = [url.absoluteString]
+                    } else {
+                        var flag = true
+                        for oldUrl in dict[text]! {
+                            if oldUrl == url.absoluteString || SimpleSpider.getChapter(url: oldUrl) == SimpleSpider.getChapter(url: url.absoluteString) {
+                                flag = false
+                            }
+                        }
+                        if flag {
+                            contents.append((text, url.absoluteString))
+                            dict[text]!.append(url.absoluteString)
+                        }
                     }
                 }
             }

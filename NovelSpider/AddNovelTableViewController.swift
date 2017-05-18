@@ -64,7 +64,6 @@ class AddNovelTableViewController: UITableViewController {
             novel.contentsUrl = contentsUrl
             novel.avatar = avatar
             for obj in contents {
-                //let chapter = Chapter(entity: Chapter.entity(), insertInto: self.context)
                 let chapter = Chapter(context: self.context)
                 chapter.title = obj.title
                 chapter.url = obj.url
