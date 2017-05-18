@@ -24,7 +24,7 @@ class SimpleSpider {
     private static let regexNewline = try! NSRegularExpression(pattern: "\\n{2,}")
     private static let regexWhite = try! NSRegularExpression(pattern: "\\s*\\n\\s*")
     private static let regexContainer = try! NSRegularExpression(pattern: "</?(div|th|td|li|p)")
-    private static let regexChapterTitle = try! NSRegularExpression(pattern: "^第?[序〇零一二三四五六七八九十百千0-9]+?[章节. ]")
+    private static let regexChapterTitle = try! NSRegularExpression(pattern: "(第|^)[序〇零一二三四五六七八九十百千0-9]+?[章节. ]")
     
     private class func getUrl(_ url: String) -> String {
         var req = URLRequest(url: URL(string: url)!)
@@ -100,7 +100,7 @@ class SimpleSpider {
                 continue
             }
             let title = doc.firstNode(matchingSelector: "title")!.textContent
-            if (try! NSRegularExpression(pattern: "^\(name)")).numberOfMatches(in: title, range: NSRange(location: 0, length: title.characters.count)) > 0 {
+            if (try! NSRegularExpression(pattern: "([^\\p{Han}]|^)\(name)")).numberOfMatches(in: title, range: NSRange(location: 0, length: title.characters.count)) > 0 {
                 var i = 0
                 for link in doc.nodes(matchingSelector: "a") {
                     let text = link.textContent
