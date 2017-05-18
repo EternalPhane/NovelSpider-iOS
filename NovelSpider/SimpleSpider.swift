@@ -13,7 +13,7 @@ class SimpleSpider {
     private static let gbk = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue)))
     private static let searchEngines = [
         "百度": (
-            url: "http://www.baidu.com/s?wd=",
+            url: "https://www.baidu.com/s?wd=",
             pattern: "a[target='_blank'][data-click]"
         ),
         "Bing": (
@@ -29,6 +29,10 @@ class SimpleSpider {
     private class func getUrl(_ url: String) -> String {
         var req = URLRequest(url: URL(string: url)!)
         req.httpMethod = "HEAD"
+        req.addValue("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", forHTTPHeaderField: "Accept")
+        req.addValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12", forHTTPHeaderField: "User-Agent")
+        req.timeoutInterval = 10
+        req.httpShouldUsePipelining = true
         var redirectedUrl = url
         let sema = DispatchSemaphore(value: 0)
         URLSession.shared.dataTask(with: req) { (data, response, error) in
@@ -43,9 +47,14 @@ class SimpleSpider {
     
     private class func getHtml(_ url: String) -> HTMLDocument? {
         let url = URL(string: url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
+        var req = URLRequest(url: url!)
+        req.addValue("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", forHTTPHeaderField: "Accept")
+        req.addValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12", forHTTPHeaderField: "User-Agent")
+        req.timeoutInterval = 10
+        req.httpShouldUsePipelining = true
         var html: String?
         let sema = DispatchSemaphore(value: 0)
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+        URLSession.shared.dataTask(with: req) { (data, response, error) in
             guard data != nil else {
                 sema.signal()
                 return
