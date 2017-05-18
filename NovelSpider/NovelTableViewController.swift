@@ -158,7 +158,7 @@ class NovelTableViewController: UITableViewController {
     func refresh() {
         self.tableView.allowsSelection = false
         DispatchQueue.global().async {
-            var result = false
+            var result = true
             for novel in self.novels {
                 result = novel.update()
                 guard result else {
@@ -170,7 +170,6 @@ class NovelTableViewController: UITableViewController {
                 self.refreshControl!.endRefreshing()
                 if !result {
                     self.alert(title: "错误", message: "检查更新失败，请检查网络！") {
-                        self.refreshControl!.endRefreshing()
                         self.tableView.reloadData()
                     }
                 }

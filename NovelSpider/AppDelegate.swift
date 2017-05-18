@@ -23,6 +23,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
          */
+        let url = NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("NovelSpider.sqlite")
+        if !FileManager.default.fileExists(atPath: url.path) {
+            do {
+                try FileManager.default.copyItem(at: Bundle.main.url(forResource: "NovelSpider", withExtension: "sqlite")!, to: url)
+            } catch {
+                print(error)
+            }
+        }
         let container = NSPersistentContainer(name: "NovelSpider")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {

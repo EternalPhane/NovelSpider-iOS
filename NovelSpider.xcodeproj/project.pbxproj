@@ -28,6 +28,7 @@
 		A55A61AB1EA8D42800A17714 /* SearchEngineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A31EA8D42800A17714 /* SearchEngineTableViewController.swift */; };
 		A55A61AC1EA8D42800A17714 /* SourceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A41EA8D42800A17714 /* SourceTableViewCell.swift */; };
 		A55A61AD1EA8D42800A17714 /* SourceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A51EA8D42800A17714 /* SourceTableViewController.swift */; };
+		A59077661ECD8E530065232D /* NovelSpider.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = A59077631ECD8E530065232D /* NovelSpider.sqlite */; };
 		A5C3E5EB1EC8A58100C59170 /* ActivityIndicator.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5C3E5EA1EC8A58100C59170 /* ActivityIndicator.storyboard */; };
 		A5C3E5ED1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C3E5EC1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift */; };
 		A5C3E5EF1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C3E5EE1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift */; };
@@ -72,6 +73,7 @@
 		A55A61A31EA8D42800A17714 /* SearchEngineTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEngineTableViewController.swift; sourceTree = "<group>"; };
 		A55A61A41EA8D42800A17714 /* SourceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceTableViewCell.swift; sourceTree = "<group>"; };
 		A55A61A51EA8D42800A17714 /* SourceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceTableViewController.swift; sourceTree = "<group>"; };
+		A59077631ECD8E530065232D /* NovelSpider.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = NovelSpider.sqlite; sourceTree = "<group>"; };
 		A5C3E5EA1EC8A58100C59170 /* ActivityIndicator.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ActivityIndicator.storyboard; sourceTree = "<group>"; };
 		A5C3E5EC1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabeledActivityIndicatorViewController.swift; sourceTree = "<group>"; };
 		A5C3E5EE1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				A54296D31EA8D36000E86312 /* Extensions.swift */,
 				A54296AD1EA8CEFC00E86312 /* Assets.xcassets */,
 				A54296B21EA8CEFC00E86312 /* Info.plist */,
+				A59077631ECD8E530065232D /* NovelSpider.sqlite */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				A54296B11EA8CEFC00E86312 /* LaunchScreen.storyboard in Resources */,
 				A5C3E5EB1EC8A58100C59170 /* ActivityIndicator.storyboard in Resources */,
 				A54296AE1EA8CEFC00E86312 /* Assets.xcassets in Resources */,
+				A59077661ECD8E530065232D /* NovelSpider.sqlite in Resources */,
 				A54296A91EA8CEFC00E86312 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
