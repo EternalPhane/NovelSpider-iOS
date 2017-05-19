@@ -107,6 +107,7 @@ class ReaderViewController: UIViewController {
             self.readerTextView.addGestureRecognizer(self.toggleBarsGesture)
             self.readerTextView.addGestureRecognizer(self.toggleContentsGesture)
             self.readerTextView.addGestureRecognizer(self.toggleSettingsGesture)
+            self.readerTextView.isSelectable = false
         }
     }
     
