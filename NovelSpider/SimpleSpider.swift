@@ -26,49 +26,46 @@ class SimpleSpider {
     private static let regexContainer = try! NSRegularExpression(pattern: "</?(div|th|td|li|p)")
     private static let regexChapterTitle = try! NSRegularExpression(pattern: "(第|^)[序〇零一二三四五六七八九十百千0-9]+?[章节. ]")
     
-    private class func getUrl(_ url: String) -> String {
-        var req = URLRequest(url: URL(string: url)!)
-        req.httpMethod = "HEAD"
-        req.addValue("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", forHTTPHeaderField: "Accept")
-        req.addValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12", forHTTPHeaderField: "User-Agent")
-        req.timeoutInterval = 10
-        req.httpShouldUsePipelining = true
-        var redirectedUrl = url
+    private class func httpRequest(_ url: String, _ method: String = "GET") -> (data: Data?, response: URLResponse?, error: Error?) {
+        var request = URLRequest(url: URL(string: url)!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+        request.addValue("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", forHTTPHeaderField: "Accept")
+        request.addValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12", forHTTPHeaderField: "User-Agent")
+        request.httpShouldUsePipelining = true
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.urlCache = nil
+        var result: (Data?, URLResponse?, Error?)
         let sema = DispatchSemaphore(value: 0)
-        URLSession.shared.dataTask(with: req) { (data, response, error) in
-            if response != nil {
-                redirectedUrl = response!.url!.absoluteString
-            }
+        URLSession.init(configuration: config).dataTask(with: request) { (data, response, error) in
+            result = (data, response, error)
             sema.signal()
         }.resume()
         sema.wait()
+        return result
+    }
+    
+    private class func getUrl(_ url: String) -> String {
+        var redirectedUrl = url
+        let (_, response, _) = SimpleSpider.httpRequest(url, "HEAD")
+        if response != nil {
+            redirectedUrl = response!.url!.absoluteString
+        }
         return redirectedUrl
     }
     
     private class func getHtml(_ url: String) -> HTMLDocument? {
-        let url = URL(string: url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
-        var req = URLRequest(url: url!)
-        req.addValue("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", forHTTPHeaderField: "Accept")
-        req.addValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12", forHTTPHeaderField: "User-Agent")
-        req.timeoutInterval = 10
-        req.httpShouldUsePipelining = true
+        let (data, response, _) = SimpleSpider.httpRequest(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!, "HEAD")
         var html: String?
-        let sema = DispatchSemaphore(value: 0)
-        URLSession.shared.dataTask(with: req) { (data, response, error) in
-            guard data != nil && (response as! HTTPURLResponse).statusCode == 200 else {
-                sema.signal()
-                return
+        guard data != nil && (response as! HTTPURLResponse).statusCode == 200 else {
+            return nil
+        }
+        for encoding in [String.Encoding.utf8, SimpleSpider.gbk] {
+            html = String(data: data!, encoding: encoding)
+            if html != nil {
+                return HTMLDocument(string: html!)
             }
-            for encoding in [String.Encoding.utf8, SimpleSpider.gbk] {
-                html = String(data: data!, encoding: encoding)
-                if html != nil {
-                    break
-                }
-            }
-            sema.signal()
-        }.resume()
-        sema.wait()
-        return html == nil ? nil : HTMLDocument(string: html!)
+        }
+        return nil
     }
     
     class func getContentsUrl(name: String, source: String, searchEngine: String = "Bing", maxDepth: Int = 3) -> String? {
@@ -147,6 +144,9 @@ class SimpleSpider {
             let text = link.textContent.trimmingCharacters(in: .whitespacesAndNewlines)
             if SimpleSpider.regexChapterTitle.numberOfMatches(in: text, range: NSRange(location: 0, length: text.characters.count)) > 0 {
                 if let url = URL(string: link["href"], relativeTo: baseUrl) {
+                    guard !url.absoluteString.characters.contains("#") else {
+                        continue
+                    }
                     if dict[text] == nil {
                         contents.append((text, url.absoluteString))
                         dict[text] = [url.absoluteString]
@@ -154,7 +154,14 @@ class SimpleSpider {
                         var flag = true
                         for oldUrl in dict[text]! {
                             if oldUrl == url.absoluteString {
-                                flag = flag && false
+                                flag = false
+                                break
+                            } else {
+                                let html = SimpleSpider.getChapter(url: oldUrl)
+                                if html == SimpleSpider.getChapter(url: url.absoluteString) && doc != nil {
+                                    flag = false
+                                    break
+                                }
                             }
                         }
                         if flag {
