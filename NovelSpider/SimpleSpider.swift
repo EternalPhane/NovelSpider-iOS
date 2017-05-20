@@ -24,7 +24,7 @@ class SimpleSpider {
     private static let regexNewline = try! NSRegularExpression(pattern: "\\n{2,}")
     private static let regexWhite = try! NSRegularExpression(pattern: "\\s*\\n\\s*")
     private static let regexContainer = try! NSRegularExpression(pattern: "</?(div|th|td|li|p)")
-    private static let regexChapterTitle = try! NSRegularExpression(pattern: "(第|^)([序〇零一二三四五六七八九十百千0-9]+?)[章节. ]")
+    private static let regexChapterTitle = try! NSRegularExpression(pattern: "(第|^)([序〇零一二三四五六七八九十百千终0-9]+?)[章节. ]")
     private static let regexFirstChapter = try! NSRegularExpression(pattern: "^(序|[〇零0]*[一1]?)$")
     
     private class func httpRequest(_ url: String, _ method: String = "GET") -> (data: Data?, response: URLResponse?, error: Error?) {
@@ -55,7 +55,7 @@ class SimpleSpider {
     }
     
     private class func getHtml(_ url: String) -> HTMLDocument? {
-        let (data, response, _) = SimpleSpider.httpRequest(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!, "HEAD")
+        let (data, response, _) = SimpleSpider.httpRequest(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
         var html: String?
         guard data != nil && (response as! HTTPURLResponse).statusCode == 200 else {
             return nil

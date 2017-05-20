@@ -161,7 +161,7 @@ class NovelTableViewController: UITableViewController {
             var result = true
             for (index, novel) in self.novels.enumerated() {
                 result = result && novel.update()
-                DispatchQueue.main.async {
+                DispatchQueue.main.sync {
                     self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
                     self.refreshControl!.attributedTitle = NSAttributedString(string: "正在更新: \(index + 1)/\(self.novels.count)")
                 }
