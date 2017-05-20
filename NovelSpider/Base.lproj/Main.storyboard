@@ -83,20 +83,22 @@
                                     <constraints>
                                         <constraint firstItem="KC8-7F-SCn" firstAttribute="leading" secondItem="OOs-iq-NOP" secondAttribute="trailing" constant="8" id="85F-dg-El6"/>
                                         <constraint firstItem="OOs-iq-NOP" firstAttribute="leading" secondItem="Alf-EO-6hT" secondAttribute="leading" constant="8" id="EHd-W9-p8J"/>
+                                        <constraint firstItem="QPy-8u-h0E" firstAttribute="leading" secondItem="Alf-EO-6hT" secondAttribute="leading" id="Gmc-iC-AQ9"/>
                                         <constraint firstItem="RW1-Tg-Sfv" firstAttribute="trailing" secondItem="Alf-EO-6hT" secondAttribute="trailingMargin" constant="8" id="IrO-pl-j7W"/>
                                         <constraint firstItem="RW1-Tg-Sfv" firstAttribute="centerY" secondItem="Alf-EO-6hT" secondAttribute="centerY" id="M7k-Vy-zeN"/>
                                         <constraint firstItem="OOs-iq-NOP" firstAttribute="centerY" secondItem="Alf-EO-6hT" secondAttribute="centerY" id="NP9-CW-2eq"/>
                                         <constraint firstItem="Nfq-Gv-9Dp" firstAttribute="leading" secondItem="OOs-iq-NOP" secondAttribute="trailing" constant="8" id="QQC-Y2-Pjd"/>
-                                        <constraint firstItem="QPy-8u-h0E" firstAttribute="leading" secondItem="Alf-EO-6hT" secondAttribute="leading" id="TBT-Rg-QMk"/>
                                         <constraint firstAttribute="trailing" secondItem="Nfq-Gv-9Dp" secondAttribute="trailing" constant="8" id="eqZ-dS-Nw9"/>
                                         <constraint firstAttribute="bottom" secondItem="QPy-8u-h0E" secondAttribute="bottom" id="grb-sb-kzp"/>
                                         <constraint firstItem="RW1-Tg-Sfv" firstAttribute="leading" secondItem="OOs-iq-NOP" secondAttribute="trailing" constant="8" id="hAx-Se-3hR"/>
-                                        <constraint firstAttribute="trailing" secondItem="QPy-8u-h0E" secondAttribute="trailing" id="j5u-E5-rOm"/>
                                         <constraint firstItem="KC8-7F-SCn" firstAttribute="trailing" secondItem="Alf-EO-6hT" secondAttribute="trailingMargin" constant="8" id="klk-8A-Tzq"/>
                                         <constraint firstItem="Nfq-Gv-9Dp" firstAttribute="top" secondItem="Alf-EO-6hT" secondAttribute="top" constant="8" id="u0h-SD-DKN"/>
                                         <constraint firstAttribute="bottom" secondItem="KC8-7F-SCn" secondAttribute="bottom" constant="8" id="yVR-SS-NBO"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <constraints>
+                                    <constraint firstItem="QPy-8u-h0E" firstAttribute="width" secondItem="IWe-qy-Vfp" secondAttribute="width" id="CmF-WE-1ZU"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="avatarImageView" destination="OOs-iq-NOP" id="eQO-yb-S4e"/>
                                     <outlet property="cacheProgressView" destination="QPy-8u-h0E" id="dBk-Sf-nDj"/>
