@@ -42,20 +42,33 @@ class Novel: NSManagedObject {
         chapter.novel = self
     }
     
-    func cache(update: Bool, background: ((Float) -> Void)? = nil) -> Bool {
+    func cache(update: Bool, background: @escaping (Float) -> Void) -> Bool {
         let sum = self.contents!.count
-        for (index, chapter) in self.contents!.enumerated() {
-            let chapter = chapter as! Chapter
+        var progress: UInt = 0
+        var result = true
+        let group = DispatchGroup()
+        let source = DispatchSource.makeUserDataAddSource()
+        source.setEventHandler() {
+            progress += source.data
+            background(Float(progress) / Float(sum))
+        }
+        source.resume()
+        DispatchQueue.concurrentPerform(iterations: sum) { (index) in
+            guard result else {
+                return
+            }
+            let chapter = self.contents![index] as! Chapter
+            group.enter()
             if update || chapter.content == nil {
                 if !chapter.cache() {
-                    return false
+                    result = false
                 }
             }
-            if background != nil {
-                background!(Float(index) / Float(sum))
-            }
+            source.add(data: 1)
+            group.leave()
         }
-        return true
+        group.wait()
+        return result
     }
     
     func update() -> Bool {
