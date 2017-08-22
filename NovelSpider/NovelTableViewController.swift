@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class NovelTableViewController: UITableViewController {
-    var novels = [Novel]()
+    var novels = [NovelSnapshot]()
     var cellSnapshot: UIView?
     var cellIndexPath: IndexPath?
     
@@ -24,7 +24,9 @@ class NovelTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.reloadData()
+        if self.novels.count == 0 {
+            self.reloadData(limit: 10)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,11 +39,13 @@ class NovelTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return novels.count
+        return self.novels.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NovelTableViewCell", for: indexPath) as! NovelTableViewCell
+        cell.layer.shouldRasterize = true
+        cell.layer.rasterizationScale = UIScreen.main.scale
         if cell.tag == 1 {
             cell.accessoryView = nil
             cell.tag = 0
@@ -52,13 +56,13 @@ class NovelTableViewController: UITableViewController {
             cell.avatarImageView.image = UIImage(data: avatar as Data)
         }
         cell.nameLabel.text = novel.name
-        cell.sourceLabel.text = "\(novel.source!.name!)(\(novel.source!.url!))"
+        cell.sourceLabel.text = "\(novel.source.name!)(\(novel.source.url!))"
         cell.statusLabel.text = "尚未开始阅读"
         if let lastViewChapter = novel.lastViewChapter {
             cell.statusLabel.text = lastViewChapter.title
         }
-        if novel.updates > 0 {
-            cell.showAccesoryBadge(badge: "\(novel.updates)")
+        if Int(novel.updates)! > 0 {
+            cell.showAccesoryBadge(badge: novel.updates)
         } else {
             cell.accessoryView = nil
         }
@@ -67,11 +71,18 @@ class NovelTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return !self.novels[indexPath.row].isCaching && (self.refreshControl == nil || !self.refreshControl!.isRefreshing)
+        return !self.novels[indexPath.row].isCaching && !self.novels[indexPath.row].isUpdating && (self.refreshControl == nil || !self.refreshControl!.isRefreshing)
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if self.novels[indexPath.row].isUpdating {
+            return nil
+        }
+        return indexPath
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let handler = { (action: UITableViewRowAction, indexPath: IndexPath) in
+        let cache = UITableViewRowAction(style: .normal, title: "缓存") { (action, indexPath) in
             self.setEditing(false, animated: true)
             self.novels[indexPath.row].isCaching = true
             if let cell = tableView.cellForRow(at: indexPath) as? NovelTableViewCell {
@@ -80,13 +91,13 @@ class NovelTableViewController: UITableViewController {
             DispatchQueue.global().async {
                 let refreshControl = self.refreshControl
                 self.refreshControl = nil
-                let result = self.novels[indexPath.row].cache(update: action.title == "更新缓存") { (progress: Float) in
+                let result = self.novels[indexPath.row].cache { (progress: Float) in
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateCacheProgress"), object: nil, userInfo: [
                         "indexPath": indexPath,
                         "progress": progress
-                    ])
+                        ])
                 }
-                (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
                 DispatchQueue.main.async {
                     if !result {
                         self.alert(title: "错误", message: "章节缓存失败，请检查网络！", okAction: nil)
@@ -99,31 +110,58 @@ class NovelTableViewController: UITableViewController {
                 }
             }
         }
-        let cache = UITableViewRowAction(style: .normal, title: "缓存", handler: handler)
         cache.backgroundColor = .gray
-        let update = UITableViewRowAction(style: .normal, title: "更新缓存", handler: handler)
+        let update = UITableViewRowAction(style: .normal, title: "更新") { (action, indexPath) in
+            self.setEditing(false, animated: true)
+            self.novels[indexPath.row].isUpdating = true
+            if let cell = tableView.cellForRow(at: indexPath) as? NovelTableViewCell {
+                cell.cacheProgressView.isHidden = false
+            }
+            DispatchQueue.global().async {
+                let refreshControl = self.refreshControl
+                self.refreshControl = nil
+                let result = self.novels[indexPath.row].update { (progress: Float) in
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateCacheProgress"), object: nil, userInfo: [
+                        "indexPath": indexPath,
+                        "progress": progress
+                        ])
+                }
+                _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
+                    if !result {
+                        self.alert(title: "错误", message: "小说更新失败，请检查网络！", okAction: nil)
+                    }
+                    if let cell = tableView.cellForRow(at: indexPath) as? NovelTableViewCell {
+                        cell.cacheProgressView.isHidden = true
+                    }
+                    self.novels[indexPath.row].isUpdating = false
+                    self.refreshControl = refreshControl
+                }
+            }
+        }
         update.backgroundColor = .orange
         let delete = UITableViewRowAction(style: .destructive, title: "删除") { (action, indexPath) in
             let novel = self.novels[indexPath.row]
             let alert = UIAlertController(title: nil, message: "您确定要删除选中的小说吗", preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "删除选中的小说", style: .destructive) { (result) in
                 self.setEditing(false, animated: true)
-                self.context.delete(novel)
+                self.context.delete(novel.novel)
                 if let error = (UIApplication.shared.delegate as! AppDelegate).saveContext() {
                     self.alert(title: "错误", message: "发生未知错误，请稍后重试！\n\(error.localizedDescription)") {
-                        self.reloadData()
+                        self.reloadData(limit: 0)
                     }
                     return
                 }
                 self.novels.remove(at: indexPath.row)
-                tableView.beginUpdates()
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                tableView.endUpdates()
+                self.tableView.beginUpdates()
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+                self.tableView.endUpdates()
             })
             alert.addAction(UIAlertAction(title: "仅删除缓存", style: .default) { (result) in
                 self.setEditing(false, animated: true)
                 novel.removeCache()
-                (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
             })
             alert.addAction(UIAlertAction(title: "取消", style: .cancel) { (result) in
                 self.setEditing(false, animated: true)
@@ -138,20 +176,40 @@ class NovelTableViewController: UITableViewController {
         if let viewController = segue.destination as? AddNovelTableViewController {
             viewController.novels = self.novels
         } else if let viewController = segue.destination as? ReaderViewController {
-            viewController.novel = self.novels[self.tableView.indexPathForSelectedRow!.row]
+            viewController.novel = self.novels[self.tableView.indexPathForSelectedRow!.row].novel
         }
     }
     
-    func reloadData() {
+    func reloadData(limit: Int) {
         do {
             let fetchRequest: NSFetchRequest<Novel> = Novel.fetchRequest()
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Novel.order), ascending: true, selector: #selector(NSString.localizedStandardCompare))]
-            self.novels = try self.context.fetch(fetchRequest)
+            fetchRequest.fetchLimit = limit
+            self.novels.removeAll(keepingCapacity: true)
+            var novels = try self.context.fetch(fetchRequest)
+            self.novels.append(contentsOf: NovelSnapshot.snapshots(novels: novels))
+            self.tableView.reloadData()
+            fetchRequest.fetchOffset += novels.count
+            DispatchQueue.global().async {
+                do {
+                    novels = try self.context.fetch(fetchRequest)
+                    while novels.count > 0 {
+                        self.novels.append(contentsOf: NovelSnapshot.snapshots(novels: novels))
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                        fetchRequest.fetchOffset += novels.count
+                        novels = try self.context.fetch(fetchRequest)
+                    }
+                } catch {
+                    let nserror = error as NSError
+                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                }
+            }
         } catch {
             let nserror = error as NSError
             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
-        self.tableView.reloadData()
     }
     
     func refresh() {
@@ -160,7 +218,7 @@ class NovelTableViewController: UITableViewController {
         DispatchQueue.global().async {
             var result = true
             for (index, novel) in self.novels.enumerated() {
-                if !novel.update() {
+                if !novel.update(background: nil) {
                     result = false
                 }
                 DispatchQueue.main.sync {
@@ -168,7 +226,7 @@ class NovelTableViewController: UITableViewController {
                     self.refreshControl!.attributedTitle = NSAttributedString(string: "正在更新: \(index + 1)/\(self.novels.count)")
                 }
             }
-            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
             DispatchQueue.main.async {
                 self.refreshControl!.endRefreshing()
                 self.refreshControl!.attributedTitle = nil
@@ -243,9 +301,9 @@ class NovelTableViewController: UITableViewController {
                     self.cellSnapshot!.removeFromSuperview()
                     self.cellSnapshot = nil
                     for i in 0..<self.novels.count {
-                        self.novels[i].order = "\(i)"
+                        self.novels[i].changeOrder(order: "\(i)")
                     }
-                    (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                    _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
                 }
             })
             break

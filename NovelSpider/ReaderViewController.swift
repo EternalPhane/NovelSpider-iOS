@@ -122,7 +122,7 @@ class ReaderViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.novel.lastViewChapter = (self.novel.contents![self.chapterIndex] as! Chapter)
         self.novel.lastViewOffset = NSKeyedArchiver.archivedData(withRootObject: self.readerTextView.contentOffset) as NSData
-        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
         self.navigationController!.toolbar.isTranslucent = false
         self.navigationController!.isToolbarHidden = true
         self.navigationController!.toolbar.barStyle = .default

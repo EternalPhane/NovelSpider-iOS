@@ -16,19 +16,9 @@ class Novel: NSManagedObject {
     @NSManaged var contents: NSOrderedSet?
     @NSManaged var avatar: NSData?
     @NSManaged var order: String?
+    @NSManaged var updates: String?
     @NSManaged var lastViewChapter: Chapter?
     @NSManaged var lastViewOffset: NSData?
-    var isCaching = false
-    
-    var updates: Int {
-        var updates = 0
-        for chapter in self.contents! {
-            if (chapter as! Chapter).isNew {
-                updates += 1
-            }
-        }
-        return updates
-    }
     
     @nonobjc class func fetchRequest() -> NSFetchRequest<Novel> {
         return NSFetchRequest<Novel>(entityName: "Novel")
@@ -42,7 +32,7 @@ class Novel: NSManagedObject {
         chapter.novel = self
     }
     
-    func cache(update: Bool, background: @escaping (Float) -> Void) -> Bool {
+    func cache(background: @escaping (Float) -> Void) -> Bool {
         let sum = self.contents!.count
         var progress: UInt = 0
         var result = true
@@ -59,7 +49,7 @@ class Novel: NSManagedObject {
             }
             let chapter = self.contents![index] as! Chapter
             group.enter()
-            if update || chapter.content == nil {
+            if chapter.content == nil {
                 if !chapter.cache() {
                     result = false
                 }
@@ -71,8 +61,13 @@ class Novel: NSManagedObject {
         return result
     }
     
-    func update() -> Bool {
+    func update(background: ((Float) -> Void)?) -> Bool {
+        var background = background
+        if background == nil {
+            background = { _ in }
+        }
         let contents = SimpleSpider.getContents(url: self.contentsUrl!)
+        background!(0.4)
         guard contents != nil else {
             return false
         }
@@ -89,7 +84,7 @@ class Novel: NSManagedObject {
             oldContentsIndex[chapter.url!] = index
         }
         let newContents = NSMutableOrderedSet()
-        for (title, url) in contents! {
+        for (offset: index, element: (title: title, url: url)) in contents!.enumerated() {
             var chapter: Chapter!
             if oldContents[title] == nil {
                 if oldContents[url] == nil {
@@ -113,6 +108,7 @@ class Novel: NSManagedObject {
                 }
             }
             newContents.add(chapter)
+            background!(0.4 + Float(index) / Float(contents!.count) * 0.4)
         }
         for chapter in newContents {
             let chapter = chapter as! Chapter
@@ -127,6 +123,15 @@ class Novel: NSManagedObject {
             }
         }
         self.contents = newContents
+        background!(0.9)
+        var updates = 0
+        for chapter in self.contents! {
+            if (chapter as! Chapter).isNew {
+                updates += 1
+            }
+        }
+        self.updates = "\(updates)"
+        background!(1.0)
         return true
     }
     

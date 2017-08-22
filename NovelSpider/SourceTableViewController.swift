@@ -69,7 +69,7 @@ class SourceTableViewController: UITableViewController {
                 return
             }
             self.context.delete(source)
-            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
             self.sources.remove(at: indexPath.row)
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)

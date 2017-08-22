@@ -17,10 +17,11 @@ class AddNovelTableViewController: UITableViewController {
     @IBOutlet weak var searchEngineLabel: UILabel!
     @IBOutlet weak var depthTableViewCell: UITableViewCell!
     @IBOutlet weak var depthTextField: UITextField!
-    var novels: [Novel]?
+    var novels: [NovelSnapshot]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.delegate = self
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
@@ -63,6 +64,7 @@ class AddNovelTableViewController: UITableViewController {
             novel.source = source
             novel.contentsUrl = contentsUrl
             novel.avatar = avatar
+            novel.updates = "0"
             for obj in contents {
                 let chapter = Chapter(context: self.context)
                 chapter.title = obj.title
@@ -72,10 +74,10 @@ class AddNovelTableViewController: UITableViewController {
             }
             novel.order = "0"
             for novel in self.novels! {
-                novel.order = "\(Int(novel.order!)! + 1)"
+                novel.changeOrder(order: "\(Int(novel.order)! + 1)")
             }
-            self.novels!.insert(novel, at: 0)
-            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            self.novels!.insert(NovelSnapshot(novel: novel), at: 0)
             DispatchQueue.main.async {
                 self.dismissActivityIndicator() {
                     self.navigationController!.popViewController(animated: true)
@@ -100,5 +102,14 @@ class AddNovelTableViewController: UITableViewController {
     func changeSearchEngine(notification: Notification) {
         self.searchEngineLabel.tag = notification.userInfo!["tag"] as! Int
         self.searchEngineLabel.text = (notification.userInfo!["text"] as! String)
+    }
+}
+
+extension AddNovelTableViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if let viewController = viewController as? NovelTableViewController {
+            viewController.novels = self.novels!
+            viewController.tableView.reloadData()
+        }
     }
 }

@@ -29,6 +29,7 @@
 		A55A61AC1EA8D42800A17714 /* SourceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A41EA8D42800A17714 /* SourceTableViewCell.swift */; };
 		A55A61AD1EA8D42800A17714 /* SourceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A51EA8D42800A17714 /* SourceTableViewController.swift */; };
 		A59077661ECD8E530065232D /* NovelSpider.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = A59077631ECD8E530065232D /* NovelSpider.sqlite */; };
+		A5A748DB1F48555500538C98 /* NovelSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A748DA1F48555500538C98 /* NovelSnapshot.swift */; };
 		A5C3E5EB1EC8A58100C59170 /* ActivityIndicator.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5C3E5EA1EC8A58100C59170 /* ActivityIndicator.storyboard */; };
 		A5C3E5ED1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C3E5EC1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift */; };
 		A5C3E5EF1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C3E5EE1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift */; };
@@ -74,6 +75,7 @@
 		A55A61A41EA8D42800A17714 /* SourceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceTableViewCell.swift; sourceTree = "<group>"; };
 		A55A61A51EA8D42800A17714 /* SourceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceTableViewController.swift; sourceTree = "<group>"; };
 		A59077631ECD8E530065232D /* NovelSpider.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = NovelSpider.sqlite; sourceTree = "<group>"; };
+		A5A748DA1F48555500538C98 /* NovelSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovelSnapshot.swift; sourceTree = "<group>"; };
 		A5C3E5EA1EC8A58100C59170 /* ActivityIndicator.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ActivityIndicator.storyboard; sourceTree = "<group>"; };
 		A5C3E5EC1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabeledActivityIndicatorViewController.swift; sourceTree = "<group>"; };
 		A5C3E5EE1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorViewController.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			children = (
 				A54296CA1EA8D25A00E86312 /* Chapter.swift */,
 				A54296CF1EA8D2D200E86312 /* Novel.swift */,
+				A5A748DA1F48555500538C98 /* NovelSnapshot.swift */,
 				A54296D11EA8D2EB00E86312 /* Source.swift */,
 				A54296AA1EA8CEFC00E86312 /* NovelSpider.xcdatamodeld */,
 			);
@@ -241,6 +244,7 @@
 				A542969E1EA8CEFC00E86312 /* Resources */,
 				82FA958E0126E76CADB94A1C /* [CP] Embed Pods Frameworks */,
 				E9608DC03135417111210359 /* [CP] Copy Pods Resources */,
+				A55C79BD1F4C3272006B210D /* Increase Build Number */,
 			);
 			buildRules = (
 			);
@@ -382,6 +386,20 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NovelSpiderTests/Pods-NovelSpiderTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A55C79BD1F4C3272006B210D /* Increase Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Increase Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\n((buildNumber++))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
 		BD2B329A975E41D3A9A11110 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -439,6 +457,7 @@
 				A5C3E5ED1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift in Sources */,
 				A55A61A91EA8D42800A17714 /* NovelTableViewCell.swift in Sources */,
 				A5C5C9AE1EABAED1009CAABD /* ContentsTableViewCell.swift in Sources */,
+				A5A748DB1F48555500538C98 /* NovelSnapshot.swift in Sources */,
 				A54296A41EA8CEFC00E86312 /* AppDelegate.swift in Sources */,
 				A54296D41EA8D36000E86312 /* Extensions.swift in Sources */,
 				A5DC8FB11EAB83FB0034FBD8 /* ContentsTableViewController.swift in Sources */,
