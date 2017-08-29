@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		9AEE5FE7675BF3D1AA5B78B9 /* Pods_NovelSpider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14CF52EBE13925D4D395D32E /* Pods_NovelSpider.framework */; };
 		9FC423633B0277963762EB05 /* Pods_NovelSpiderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F22B421AAF6DC571336A9060 /* Pods_NovelSpiderTests.framework */; };
+		A535E7F01F55B86400B1BBFF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A535E7EE1F55B86400B1BBFF /* LaunchScreen.storyboard */; };
+		A535E7F11F55B86400B1BBFF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A535E7EF1F55B86400B1BBFF /* Main.storyboard */; };
 		A54296A41EA8CEFC00E86312 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296A31EA8CEFC00E86312 /* AppDelegate.swift */; };
-		A54296A91EA8CEFC00E86312 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A54296A71EA8CEFC00E86312 /* Main.storyboard */; };
 		A54296AC1EA8CEFC00E86312 /* NovelSpider.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A54296AA1EA8CEFC00E86312 /* NovelSpider.xcdatamodeld */; };
 		A54296AE1EA8CEFC00E86312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A54296AD1EA8CEFC00E86312 /* Assets.xcassets */; };
-		A54296B11EA8CEFC00E86312 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A54296AF1EA8CEFC00E86312 /* LaunchScreen.storyboard */; };
 		A54296BC1EA8CEFC00E86312 /* NovelSpiderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296BB1EA8CEFC00E86312 /* NovelSpiderTests.swift */; };
 		A54296CB1EA8D25A00E86312 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296CA1EA8D25A00E86312 /* Chapter.swift */; };
 		A54296CE1EA8D2A300E86312 /* SimpleSpider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296CD1EA8D2A300E86312 /* SimpleSpider.swift */; };
@@ -51,12 +51,12 @@
 /* Begin PBXFileReference section */
 		14CF52EBE13925D4D395D32E /* Pods_NovelSpider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NovelSpider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1644A938BC5CF8C6EA2477B8 /* Pods-NovelSpiderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NovelSpiderTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NovelSpiderTests/Pods-NovelSpiderTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A535E7EE1F55B86400B1BBFF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A535E7EF1F55B86400B1BBFF /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		A54296A01EA8CEFC00E86312 /* NovelSpider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NovelSpider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A54296A31EA8CEFC00E86312 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A54296A81EA8CEFC00E86312 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A54296AB1EA8CEFC00E86312 /* NovelSpider.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NovelSpider.xcdatamodel; sourceTree = "<group>"; };
 		A54296AD1EA8CEFC00E86312 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A54296B01EA8CEFC00E86312 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A54296B21EA8CEFC00E86312 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A54296B71EA8CEFC00E86312 /* NovelSpiderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NovelSpiderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A54296BB1EA8CEFC00E86312 /* NovelSpiderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovelSpiderTests.swift; sourceTree = "<group>"; };
@@ -178,17 +178,17 @@
 				A5C3E5EC1EC8A96000C59170 /* LabeledActivityIndicatorViewController.swift */,
 				A5C3E5EE1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift */,
 			);
-			name = Controller;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		A54296C81EA8CFEC00E86312 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A54296A71EA8CEFC00E86312 /* Main.storyboard */,
+				A535E7EE1F55B86400B1BBFF /* LaunchScreen.storyboard */,
+				A535E7EF1F55B86400B1BBFF /* Main.storyboard */,
 				A5C3E5EA1EC8A58100C59170 /* ActivityIndicator.storyboard */,
-				A54296AF1EA8CEFC00E86312 /* LaunchScreen.storyboard */,
 			);
-			name = View;
+			path = View;
 			sourceTree = "<group>";
 		};
 		A54296C91EA8D00000E86312 /* Model */ = {
@@ -200,7 +200,7 @@
 				A54296D11EA8D2EB00E86312 /* Source.swift */,
 				A54296AA1EA8CEFC00E86312 /* NovelSpider.xcdatamodeld */,
 			);
-			name = Model;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A54296CC1EA8D28A00E86312 /* Util */ = {
@@ -304,8 +304,6 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
-				Base,
 			);
 			mainGroup = A54296971EA8CEFC00E86312;
 			productRefGroup = A54296A11EA8CEFC00E86312 /* Products */;
@@ -323,11 +321,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A54296B11EA8CEFC00E86312 /* LaunchScreen.storyboard in Resources */,
 				A5C3E5EB1EC8A58100C59170 /* ActivityIndicator.storyboard in Resources */,
+				A535E7F11F55B86400B1BBFF /* Main.storyboard in Resources */,
+				A535E7F01F55B86400B1BBFF /* LaunchScreen.storyboard in Resources */,
 				A54296AE1EA8CEFC00E86312 /* Assets.xcassets in Resources */,
 				A59077661ECD8E530065232D /* NovelSpider.sqlite in Resources */,
-				A54296A91EA8CEFC00E86312 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,25 +491,6 @@
 			targetProxy = A54296B81EA8CEFC00E86312 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		A54296A71EA8CEFC00E86312 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A54296A81EA8CEFC00E86312 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		A54296AF1EA8CEFC00E86312 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A54296B01EA8CEFC00E86312 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		A54296BE1EA8CEFC00E86312 /* Debug */ = {
