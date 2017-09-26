@@ -52,7 +52,7 @@ class AddNovelTableViewController: UITableViewController {
             }
             return
         }
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .userInitiated).async {
             guard let contentsUrl = SimpleSpider.getContentsUrl(name: name, source: source.url!, searchEngine: searchEngine, maxDepth: depth), let contents = SimpleSpider.getContents(url: contentsUrl) else {
                 self.setEnabled(true)
                 self.dismissActivityIndicator(completion: nil)

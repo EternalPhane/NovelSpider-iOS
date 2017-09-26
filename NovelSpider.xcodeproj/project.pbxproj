@@ -21,8 +21,6 @@
 		A54296D21EA8D2EB00E86312 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296D11EA8D2EB00E86312 /* Source.swift */; };
 		A54296D41EA8D36000E86312 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54296D31EA8D36000E86312 /* Extensions.swift */; };
 		A55A61A61EA8D42800A17714 /* AddNovelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A619E1EA8D42800A17714 /* AddNovelTableViewController.swift */; };
-		A55A61A71EA8D42800A17714 /* ModifySourcePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A619F1EA8D42800A17714 /* ModifySourcePopupViewController.swift */; };
-		A55A61A81EA8D42800A17714 /* ModifySourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A01EA8D42800A17714 /* ModifySourceViewController.swift */; };
 		A55A61A91EA8D42800A17714 /* NovelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A11EA8D42800A17714 /* NovelTableViewCell.swift */; };
 		A55A61AA1EA8D42800A17714 /* NovelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A21EA8D42800A17714 /* NovelTableViewController.swift */; };
 		A55A61AB1EA8D42800A17714 /* SearchEngineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A61A31EA8D42800A17714 /* SearchEngineTableViewController.swift */; };
@@ -67,8 +65,6 @@
 		A54296D11EA8D2EB00E86312 /* Source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		A54296D31EA8D36000E86312 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A55A619E1EA8D42800A17714 /* AddNovelTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNovelTableViewController.swift; sourceTree = "<group>"; };
-		A55A619F1EA8D42800A17714 /* ModifySourcePopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifySourcePopupViewController.swift; sourceTree = "<group>"; };
-		A55A61A01EA8D42800A17714 /* ModifySourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifySourceViewController.swift; sourceTree = "<group>"; };
 		A55A61A11EA8D42800A17714 /* NovelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovelTableViewCell.swift; sourceTree = "<group>"; };
 		A55A61A21EA8D42800A17714 /* NovelTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NovelTableViewController.swift; sourceTree = "<group>"; };
 		A55A61A31EA8D42800A17714 /* SearchEngineTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEngineTableViewController.swift; sourceTree = "<group>"; };
@@ -170,8 +166,6 @@
 				A55A61A51EA8D42800A17714 /* SourceTableViewController.swift */,
 				A55A61A41EA8D42800A17714 /* SourceTableViewCell.swift */,
 				A55A61A31EA8D42800A17714 /* SearchEngineTableViewController.swift */,
-				A55A61A01EA8D42800A17714 /* ModifySourceViewController.swift */,
-				A55A619F1EA8D42800A17714 /* ModifySourcePopupViewController.swift */,
 				A5DC8FAC1EAB83670034FBD8 /* ReaderViewController.swift */,
 				A5DC8FB01EAB83FB0034FBD8 /* ContentsTableViewController.swift */,
 				A5C5C9AD1EABAED1009CAABD /* ContentsTableViewCell.swift */,
@@ -303,8 +297,6 @@
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
-			knownRegions = (
-			);
 			mainGroup = A54296971EA8CEFC00E86312;
 			productRefGroup = A54296A11EA8CEFC00E86312 /* Products */;
 			projectDirPath = "";
@@ -460,10 +452,8 @@
 				A54296D41EA8D36000E86312 /* Extensions.swift in Sources */,
 				A5DC8FB11EAB83FB0034FBD8 /* ContentsTableViewController.swift in Sources */,
 				A54296D21EA8D2EB00E86312 /* Source.swift in Sources */,
-				A55A61A81EA8D42800A17714 /* ModifySourceViewController.swift in Sources */,
 				A54296AC1EA8CEFC00E86312 /* NovelSpider.xcdatamodeld in Sources */,
 				A55A61AC1EA8D42800A17714 /* SourceTableViewCell.swift in Sources */,
-				A55A61A71EA8D42800A17714 /* ModifySourcePopupViewController.swift in Sources */,
 				A5C3E5EF1EC8AAEB00C59170 /* ActivityIndicatorViewController.swift in Sources */,
 				A55A61A61EA8D42800A17714 /* AddNovelTableViewController.swift in Sources */,
 				A5DC8FAD1EAB83670034FBD8 /* ReaderViewController.swift in Sources */,

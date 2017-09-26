@@ -19,12 +19,7 @@ class SourceTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        do {
-            self.sources = try self.context.fetch(Source.fetchRequest())
-        } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
+        self.reloadData()
         self.tableView.reloadData()
     }
 
@@ -55,11 +50,52 @@ class SourceTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let edit = UITableViewRowAction(style: .normal, title: "编辑") { (action, indexPath) in
-            let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ModifySourcePopupViewController") as! ModifySourceViewController
-            viewController.sourceTableViewController = self
-            viewController.popupTitle = "编辑来源"
-            viewController.source = self.sources[indexPath.row]
-            self.present(viewController, animated: true, completion: nil)
+            let source = self.sources[indexPath.row]
+            let alert = UIAlertController(title: "编辑来源", message: nil, preferredStyle: .alert)
+            let initTextField: (UITextField) -> Void = { (textField: UITextField) in
+                textField.borderStyle = .roundedRect
+                textField.frame.size.height = 32
+            }
+            alert.addTextField { (textField) in
+                textField.placeholder = "名称"
+                textField.text = source.name
+                initTextField(textField)
+            }
+            alert.addTextField { (textField) in
+                textField.placeholder = "URL"
+                textField.keyboardType = .URL
+                textField.text = source.url
+                initTextField(textField)
+            }
+            alert.addAction(UIAlertAction(title: "确定", style: .default) { (result) in
+                let nameTextField = alert.textFields![0]
+                let urlTextField = alert.textFields![1]
+                guard let name = nameTextField.text, !name.isEmpty, let url = urlTextField.text, !url.isEmpty else {
+                    return
+                }
+                alert.view.endEditing(true)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    nameTextField.isEnabled = false
+                    urlTextField.isEnabled = false
+                    source.name = name
+                    source.url = url
+                    _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                    DispatchQueue.main.async {
+                        self.tableView.reloadRows(at: [indexPath], with: .none)
+                    }
+                }
+            })
+            alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+            self.present(alert, animated: false) {
+                for textField in alert.textFields! {
+                    if let container = textField.superview, let effectView = container.superview?.subviews.first as? UIVisualEffectView {
+                        container.backgroundColor = .clear
+                        effectView.removeFromSuperview()
+                    }
+                }
+                alert.view.layoutIfNeeded()
+            }
+            self.setEditing(false, animated: true)
         }
         edit.backgroundColor = .gray
         let delete = UITableViewRowAction(style: .default, title: "删除") { (action, indexPath) in
@@ -82,6 +118,8 @@ class SourceTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == self.selectedRow {
             cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
         }
     }
     
@@ -93,10 +131,60 @@ class SourceTableViewController: UITableViewController {
         self.navigationController!.popViewController(animated: true)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewController = segue.destination as? ModifySourceViewController {
-            viewController.sourceTableViewController = self
-            viewController.popupTitle = "添加来源"
+    @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "添加来源", message: nil, preferredStyle: .alert)
+        let initTextField: (UITextField) -> Void = { (textField: UITextField) in
+            textField.borderStyle = .roundedRect
+            textField.frame.size.height = 32
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "名称"
+            initTextField(textField)
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "URL"
+            textField.keyboardType = .URL
+            initTextField(textField)
+        }
+        alert.addAction(UIAlertAction(title: "确定", style: .default) { (result) in
+            let nameTextField = alert.textFields![0]
+            let urlTextField = alert.textFields![1]
+            guard let name = nameTextField.text, !name.isEmpty, let url = urlTextField.text, !url.isEmpty else {
+                return
+            }
+            alert.view.endEditing(true)
+            DispatchQueue.global(qos: .userInitiated).async {
+                nameTextField.isEnabled = false
+                urlTextField.isEnabled = false
+                let source = Source(context: self.context)
+                source.name = name
+                source.url = url
+                _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                self.sources.append(source)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        })
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        self.present(alert, animated: false) {
+            for textField in alert.textFields! {
+                if let container = textField.superview, let effectView = container.superview?.subviews.first as? UIVisualEffectView {
+                    container.backgroundColor = .clear
+                    effectView.removeFromSuperview()
+                }
+            }
+            alert.view.layoutIfNeeded()
+        }
+        self.setEditing(false, animated: true)
+    }
+    
+    func reloadData() {
+        do {
+            self.sources = try self.context.fetch(Source.fetchRequest())
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
     }
 }

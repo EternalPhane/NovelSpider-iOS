@@ -44,18 +44,20 @@ class Novel: NSManagedObject {
         }
         source.resume()
         DispatchQueue.concurrentPerform(iterations: sum) { (index) in
-            guard result else {
-                return
-            }
-            let chapter = self.contents![index] as! Chapter
-            group.enter()
-            if chapter.content == nil {
-                if !chapter.cache() {
-                    result = false
+            autoreleasepool {
+                guard result else {
+                    return
                 }
+                let chapter = self.contents![index] as! Chapter
+                group.enter()
+                if chapter.content == nil {
+                    if !chapter.cache() {
+                        result = false
+                    }
+                }
+                source.add(data: 1)
+                group.leave()
             }
-            source.add(data: 1)
-            group.leave()
         }
         group.wait()
         return result

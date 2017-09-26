@@ -83,21 +83,23 @@ class NovelTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let cache = UITableViewRowAction(style: .normal, title: "缓存") { (action, indexPath) in
+            let novel = self.novels[indexPath.row]
             self.setEditing(false, animated: true)
-            self.novels[indexPath.row].isCaching = true
+            novel.isCaching = true
             if let cell = tableView.cellForRow(at: indexPath) as? NovelTableViewCell {
                 cell.cacheProgressView.isHidden = false
             }
-            DispatchQueue.global().async {
+            DispatchQueue.global(qos: .userInitiated).async {
                 let refreshControl = self.refreshControl
                 self.refreshControl = nil
-                let result = self.novels[indexPath.row].cache { (progress: Float) in
+                let result = novel.cache { (progress: Float) in
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateCacheProgress"), object: nil, userInfo: [
                         "indexPath": indexPath,
                         "progress": progress
                         ])
                 }
                 _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                self.context.refresh(novel.novel, mergeChanges: false)
                 DispatchQueue.main.async {
                     if !result {
                         self.alert(title: "错误", message: "章节缓存失败，请检查网络！", okAction: nil)
@@ -105,7 +107,7 @@ class NovelTableViewController: UITableViewController {
                     if let cell = tableView.cellForRow(at: indexPath) as? NovelTableViewCell {
                         cell.cacheProgressView.isHidden = true
                     }
-                    self.novels[indexPath.row].isCaching = false
+                    novel.isCaching = false
                     self.refreshControl = refreshControl
                 }
             }
@@ -117,7 +119,7 @@ class NovelTableViewController: UITableViewController {
             if let cell = tableView.cellForRow(at: indexPath) as? NovelTableViewCell {
                 cell.cacheProgressView.isHidden = false
             }
-            DispatchQueue.global().async {
+            DispatchQueue.global(qos: .userInitiated).async {
                 let refreshControl = self.refreshControl
                 self.refreshControl = nil
                 let result = self.novels[indexPath.row].update { (progress: Float) in
@@ -191,7 +193,7 @@ class NovelTableViewController: UITableViewController {
             self.novels.append(contentsOf: NovelSnapshot.snapshots(novels: novels))
             self.tableView.reloadData()
             fetchRequest.fetchOffset += novels.count
-            DispatchQueue.global().async {
+            DispatchQueue.global(qos: .userInitiated).async {
                 do {
                     novels = try self.context.fetch(fetchRequest)
                     while novels.count > 0 {
@@ -216,18 +218,21 @@ class NovelTableViewController: UITableViewController {
     func refresh() {
         self.tableView.allowsSelection = false
         self.refreshControl!.attributedTitle = NSAttributedString(string: "正在更新: 0/\(self.novels.count)")
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .userInitiated).async {
             var result = true
             for (index, novel) in self.novels.enumerated() {
-                if !novel.update(background: nil) {
-                    result = false
-                }
-                DispatchQueue.main.sync {
-                    self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-                    self.refreshControl!.attributedTitle = NSAttributedString(string: "正在更新: \(index + 1)/\(self.novels.count)")
+                autoreleasepool {
+                    if !novel.update(background: nil) {
+                        result = false
+                    }
+                    _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                    self.context.refresh(novel.novel, mergeChanges: false)
+                    DispatchQueue.main.sync {
+                        self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                        self.refreshControl!.attributedTitle = NSAttributedString(string: "正在更新: \(index + 1)/\(self.novels.count)")
+                    }
                 }
             }
-            _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
             DispatchQueue.main.async {
                 self.refreshControl!.endRefreshing()
                 self.refreshControl!.attributedTitle = nil

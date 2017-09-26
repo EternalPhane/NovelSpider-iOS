@@ -24,7 +24,7 @@ class SimpleSpider {
     private static let regexNewline = try! NSRegularExpression(pattern: "\\n{2,}")
     private static let regexWhite = try! NSRegularExpression(pattern: "\\s*\\n\\s*")
     private static let regexContainer = try! NSRegularExpression(pattern: "</?(div|th|td|li|p)")
-    private static let regexChapterTitle = try! NSRegularExpression(pattern: "(第|^)([序〇零一二两三四五六七八九十百千终0-9]+?)([章节.、 ]|$)")
+    private static let regexChapterTitle = try! NSRegularExpression(pattern: "(第|^)([序〇零一二两三四五六七八九十百千终0-9]+?)([章节.、\\- ]|$)")
     private static let regexFirstChapter = try! NSRegularExpression(pattern: "^(序|[〇零0]*[一1]?)$")
     
     private class func httpRequest(_ url: String, _ method: String = "GET") -> (data: Data?, response: URLResponse?, error: Error?) {
@@ -142,30 +142,22 @@ class SimpleSpider {
             return nil
         }
         for link in doc!.nodes(matchingSelector: "a") {
-            let text = link.textContent.trimmingCharacters(in: .whitespacesAndNewlines)
-            if SimpleSpider.regexChapterTitle.numberOfMatches(in: text, range: NSRange(location: 0, length: text.characters.count)) > 0 {
-                if let url = URL(string: link["href"], relativeTo: baseUrl) {
-                    guard !url.absoluteString.characters.contains("#") else {
-                        continue
-                    }
-                    if dict[text] == nil {
-                        contents.append((text, url.absoluteString))
-                        dict[text] = [url.absoluteString]
-                    } else {
-                        var flag = true
-                        for oldUrl in dict[text]! {
-                            if oldUrl == url.absoluteString {
-                                flag = false
-                                break
-                            } else {
-                                let html = SimpleSpider.getChapter(url: oldUrl)
-                                if html == SimpleSpider.getChapter(url: url.absoluteString) && doc != nil {
-                                    flag = false
-                                    break
+            autoreleasepool {
+                let text = link.textContent.trimmingCharacters(in: .whitespacesAndNewlines)
+                if SimpleSpider.regexChapterTitle.numberOfMatches(in: text, range: NSRange(location: 0, length: text.characters.count)) > 0 {
+                    if let url = URL(string: link["href"], relativeTo: baseUrl) {
+                        guard !url.absoluteString.characters.contains("#") else {
+                            return
+                        }
+                        if dict[text] == nil {
+                            contents.append((text, url.absoluteString))
+                            dict[text] = [url.absoluteString]
+                        } else {
+                            for oldUrl in dict[text]! {
+                                if oldUrl == url.absoluteString {
+                                    return
                                 }
                             }
-                        }
-                        if flag {
                             contents.append((text, url.absoluteString))
                             dict[text]!.append(url.absoluteString)
                         }

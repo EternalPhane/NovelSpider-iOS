@@ -96,6 +96,9 @@ class ReaderViewController: UIViewController {
                 textColor = .darkText
             }
             self.readerTextView.textColor = textColor
+            if let data = self.novel.lastViewOffset {
+                self.readerTextView.setContentOffset(NSKeyedUnarchiver.unarchiveObject(with: data as Data) as! CGPoint, animated: false)
+            }
             self.navigationController!.toolbar.barStyle = barStyle
             self.navigationController!.navigationBar.barStyle = barStyle
             self.toggleBarsGesture = UITapGestureRecognizer(target: self, action: #selector(self.toggleBars))
@@ -237,8 +240,12 @@ class ReaderViewController: UIViewController {
         if wait {
             self.showActivityIndicator(withLabel: true, labelText: "正在加载...")
         }
-        chapter.isNew = false
         DispatchQueue.global().async {
+            if chapter.isNew {
+                chapter.isNew = false
+                self.novel.updates = "\(Int(self.novel.updates!)! - 1)"
+                _ = (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            }
             let content = chapter.content ?? SimpleSpider.getChapter(url: chapter.url!)
             DispatchQueue.main.async {
                 guard content != nil else {
